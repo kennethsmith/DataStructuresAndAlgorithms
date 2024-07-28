@@ -38,6 +38,17 @@
             <artifactId>findbugs-maven-plugin</artifactId>
             <version>3.0.5</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-testing-frameworks</artifactId>
+            <version>2.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openrewrite.maven</groupId>
+            <artifactId>rewrite-maven-plugin</artifactId>
+            <version>5.36.0</version>
+        </dependency>
     </dependencies>
 
     <reporting>
@@ -66,11 +77,19 @@
                 <artifactId>rewrite-maven-plugin</artifactId>
                 <version>5.36.0</version>
                 <configuration>
+                    <exportDatatables>true</exportDatatables>
                     <activeRecipes>
                         <recipe>org.openrewrite.java.OrderImports</recipe>
                         <recipe>org.openrewrite.java.testing.junit5.JUnit4to5Migration</recipe>
                     </activeRecipes>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-testing-frameworks</artifactId>
+                        <version>2.14.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
