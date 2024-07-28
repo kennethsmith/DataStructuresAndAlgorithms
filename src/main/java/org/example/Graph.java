@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.*;
-import java.util.LinkedList;
 
 public class Graph {
 
@@ -32,15 +31,15 @@ public class Graph {
         }
     }
 
-    private final Map<Vertex, LinkedList<Vertex>> edges = new HashMap<>();
+    private final Map<Vertex, ArrayList> edges = new HashMap<>();
 
     public void addVertex(String label) {
         Vertex v = new Vertex(label);
-        edges.put(v, new LinkedList<>());
+        edges.put(v, new ArrayList());
     }
     public void removeVertex(String label) {
         Vertex v = new Vertex(label);
-        LinkedList<Vertex> es = edges.get(v);
+        ArrayList es = edges.get(v);
         edges.remove(v);
         es.forEach(e -> {
             edges.get(e).remove(v);
