@@ -1,12 +1,16 @@
 package org.example.functions;
 
+import java.util.Arrays;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 public class BubbleSort implements Function<Integer[], Integer[]> {
 
     @Override
-    public Integer[] apply(Integer[] integers) {
-        return new Integer[0];
+    public Integer[] apply(Integer[] i) {
+        int[] ints = Arrays.stream(i).mapToInt(Integer::intValue).toArray();
+        org.example.sort.BubbleSort b = new org.example.sort.BubbleSort(ints);
+        return IntStream.of(b.sort()).boxed().toArray(Integer[]::new);
     }
 
     @Override

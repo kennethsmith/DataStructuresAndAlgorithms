@@ -30,6 +30,6 @@ public class Queue {
             head = c.next;
             return c.data;
         }
-        throw new Exception("Queue empty!!");
+        throw new Exception("Empty Queue!");
     }
 }

@@ -12,11 +12,12 @@ public class BubbleSort {
     }
 
     public void print() {
-        System.out.println(Arrays.toString(list));
+        System.out.println("Unsorted: " + Arrays.toString(list));
+        System.out.println("Sorted: " + Arrays.toString(this.sort()));
     }
 
-    public void sort() {
-
+    public int[] sort() {
+        return bubbleSort(this.list);
     }
 
     static int[] bubbleSort(final int[] a) {

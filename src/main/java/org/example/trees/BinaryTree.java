@@ -1,9 +1,8 @@
 package org.example.trees;
 
-import java.util.Objects;
-
 public class BinaryTree {
-    private static class Node {
+
+    static class Node {
         String value;
         BinaryTree.Node left;
         BinaryTree.Node right;
@@ -11,54 +10,18 @@ public class BinaryTree {
         public Node(String value) {
             this.value = value;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            BinaryTree.Node node = (BinaryTree.Node) o;
-            return Objects.equals(value, node.value) && Objects.equals(left, node.left) && Objects.equals(right, node.right);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(value, left, right);
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "value='" + value + '\'' +
-                    ", left=" + left +
-                    ", right=" + right +
-                    '}';
-        }
     }
 
     private Node root = null;
 
-    public void print() {
-        traversePrint(root, 0, "");
-    }
-
-    private void traversePrint(Node node, int depth, String dir) {
-        System.out.println("Depth: " + depth + ", Direction: " + dir + "   Value: " + node.value);
-        if(node.left != null) {
-            traversePrint(node.left, depth + 1, "L");
-        }
-        if(node.right != null) {
-            traversePrint(node.right, depth + 1, "R");
-        }
-    }
-
     /*
-        This will traverse the tree and return:
-            - A parent node with a child equal to the passed node.
-            - A node that is equal to the passed node.
-            - A node that does not have a child to traverse to based on the passed node.
-     */
+    This will traverse the tree and return:
+        - A parent node with a child equal to the passed node.
+        - A node that is equal to the passed node.
+        - A node that does not have a child to traverse to based on the passed node.
+    */
     private Node traverseGet(Node t, Node n) {
-        if(null == t || null == n) {
+        if(null == t || null == n.value) {
             return null;
         }
 
@@ -77,16 +40,36 @@ public class BinaryTree {
         }
     }
 
+    public Node get(String value) {
+        Node n = traverseGet(root, new Node(value));
+        if(null != n) {
+            if (value.equals(n.value)) {
+                return n;
+            }
+            if (null != n.left && value.equals(n.left.value)) {
+                return n.left;
+            } else if (null != n.right && value.equals(n.right.value)) {
+                return n.right;
+            }
+        }
+        return null;
+    }
+
     public void add(String value) {
         addNode(root, new Node(value));
     }
 
     private void addNode(Node t, Node n) {
+        if(null == n || null == n.value) {
+            return;
+        }
+
         Node f = traverseGet(t, n);
         if(null != f) {
-            if(n.value.compareTo(f.value) < 0) {
+            if(n.value.compareTo(f.value) < 0 && null == f.left) {
                 f.left = n;
-            } else if(n.value.compareTo(f.value) > 0) {
+            }
+            if(n.value.compareTo(f.value) > 0 && null == f.right) {
                 f.right = n;
             }
         } else {
@@ -118,9 +101,23 @@ public class BinaryTree {
                     addNode(f.right.left, f.right.right);
                     f.right = f.right.left;
                 } else {
-                    f.left = f.right.right;
+                    f.right = f.right.right;
                 }
             }
+        }
+    }
+
+    public void print() {
+        traversePrint(root, 0, "");
+    }
+
+    private void traversePrint(Node node, int depth, String dir) {
+        System.out.println("Depth: " + depth + ", Direction: " + dir + "   Value: " + node.value);
+        if(node.left != null) {
+            traversePrint(node.left, depth + 1, "L");
+        }
+        if(node.right != null) {
+            traversePrint(node.right, depth + 1, "R");
         }
     }
 }

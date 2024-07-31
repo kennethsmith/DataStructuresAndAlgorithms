@@ -26,6 +26,5 @@ public class Main {
         //What we are going to code.
         Arrays.stream(learning).forEach(System.out::println);
 
-        Hashing.hash();
     }
 }

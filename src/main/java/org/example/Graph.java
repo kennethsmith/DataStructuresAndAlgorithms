@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Graph {
 
-    private static class Vertex {
+    public static class Vertex {
         String label;
         public Vertex(String label) {
             this.label = label;
@@ -41,9 +41,7 @@ public class Graph {
         Vertex v = new Vertex(label);
         ArrayList es = edges.get(v);
         edges.remove(v);
-        es.forEach(e -> {
-            edges.get(e).remove(v);
-        });
+        es.forEach(e -> edges.get(e).remove(v));
     }
 
     public void addEdge(String v1, String v2) {
@@ -51,8 +49,8 @@ public class Graph {
         // So, we'll add to both edge lists.
         Vertex ver1 = new Vertex(v1);
         Vertex ver2 = new Vertex(v2);
-        addToList(ver1, ver2);
-        addToList(ver2, ver1);
+        edges.get(ver1).add(ver2);
+        edges.get(ver2).add(ver1);
     }
 
     public void removeEdge(String v1, String v2) {
@@ -62,15 +60,6 @@ public class Graph {
         edges.get(ver2).remove(ver1);
     }
 
-    private void addToList(Vertex v1, Vertex v2) {
-        edges.get(v1).add(v2);
-    }
-
-    private void removeFromList(Vertex v1, Vertex v2) {
-        edges.get(v1).remove(v2);
-        edges.get(v2).remove(v1);
-    }
-
     public void print() {
         Arrays.stream(edges.keySet().toArray()).toList().forEach(k -> {
             System.out.println(k.toString());
@@ -78,5 +67,18 @@ public class Graph {
                 System.out.println("\t" + v.toString());
             });
         });
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Graph graph = (Graph) o;
+        return Objects.equals(edges, graph.edges);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(edges);
     }
 }

@@ -1,8 +1,11 @@
 package org.example;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StackTest {
 
@@ -18,5 +21,17 @@ public class StackTest {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @Test
+    public void testException() throws Exception {
+        Stack s = new Stack();
+        Exception thrown = assertThrows(
+                Exception.class,
+                s::pop,
+                "Expected s.pop() to throw, but it didn't"
+        );
+
+        Assertions.assertTrue(thrown.getMessage().contains("Empty Stack!"));
     }
 }

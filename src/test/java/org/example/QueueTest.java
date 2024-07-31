@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class QueueTest {
 
     @Test
@@ -18,5 +20,17 @@ public class QueueTest {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @Test
+    public void testException() throws Exception {
+        Queue q = new Queue();
+        Exception thrown = assertThrows(
+                Exception.class,
+                q::get,
+                "Expected q.get() to throw, but it didn't"
+        );
+
+        Assertions.assertTrue(thrown.getMessage().contains("Empty Queue!"));
     }
 }
